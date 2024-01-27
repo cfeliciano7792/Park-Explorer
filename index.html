@@ -1,22 +1,97 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Park Explorer</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
-</head>
-<body>
-    <h1>Welcome to National Park Explorer!!</h1>
-    <h4>
-        National Park Explorer unlocks the secrets of all 63 U.S. parks! Find trails, campsites, activities, hidden gems and more! 
-    </h4>
-    <p>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Park Explorer</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+		<script src="main.js"></script>
+	</head>
+	<body>
+		<h1>Welcome to National Park Explorer!!</h1>
+		<h4>
+			National Park Explorer unlocks the secrets of all 63 U.S. parks! Find
+			trails, campsites, activities, hidden gems and more!
+		</h4>
 
-National Park Explorer unlocks the secrets of all 63 U.S. parks! Find trails, campsites, activities, hidden gems and more! 
-    </p>
+		<label for="parkInfo" style="display:block;">Which park would you like to explore?</label>
+		<select name="parkNames" id="parkInfo">
+			<option value="Acadia">Acadia National Park</option>
+			<option value="Arches">Arches National Park</option>
+			<option value="Badlands">Badlands National Park</option>
+			<option value="Big Bend">Big Bend National Park</option>
+			<option value="Biscayne">Biscayne National Park</option>
+			<option value="Black Canyon">Black Canyon of the Gunnison National Park</option>
+			<option value="Bryce">Bryce National Park</option>
+			<option value="Canyonlands">Canyonlands National Park</option>
+			<option value="Capitol Reef ">Capitol Reef National Park</option>
+			<option value="Carlsbad Caverns">Carlsbad Caverns National Park</option>
+			<option value="Channel Islands">Channel Islands National Park</option>
+			<option value="Congaree">Congaree National Park</option>
+			<option value="Crater">Crater National Park</option>
+			<option value="Cuyahoga Valley">Cuyahoga Valley National Park</option>
+			<option value="Death Valley">Death Valley National Park</option>
+			<option value="Denali">Denali National Park</option>
+			<option value="Dry Tortugas">Dry Tortugas National Park</option>
+			<option value="Everglades">Everglades National Park</option>
+			<option value="Gates of the Arctic">Gates of the Arctic National Park</option>
+			<option value="Gateway Arch">Gateway Arch National Park</option>
+			<option value="Glacier Bay">Glacier Bay National Park</option>
+			<option value="Glacier">Glacier National Park</option>
+			<option value="Grand Canyon">Grand Canyon National Park</option>
+			<option value="Grand Teton">Grand Teton National Park</option>
+			<option value="Great Basin">Great Basin National Park</option>
+			<option value="Great Sand Dunes">Great Sand Dunes National Park</option>
+			<option value="Great Smoky">Great Smoky Mountains National Park</option>
+			<option value="Guadalupe Mountains">Guadalupe Mountains National Park</option>
+			<option value="Haleakala">Haleakala National Park</option>
+			<option value="Hawaii Volcanoes">Hawaii Volcanoes National Park</option>
+			<option value="Hot Springs">Hot Springs National Park</option>
+			<option value="Indiana Dunes">Indiana Dunes National Park</option>
+			<option value="Isle Royale">Isle Royale National Park</option>
+			<option value="Joshua Tree">Joshua Tree National Park</option>
+			<option value="Katmai">Katmai National Park</option>
+			<option value="Kenai Fjords">Kenai Fjords National Park</option>
+			<option value="Kings Canyon">Kings Canyon National Park</option>
+			<option value="Kobuk Valley">Kobuk Valley National Park</option>
+			<option value="Lake Clark">Lake Clark National Park</option>
+			<option value="Lassen Volcanic">Lassen Volcanic National Park</option>
+			<option value="Mammoth Cave">Mammoth Cave National Park</option>
+			<option value="Mesa Verde">Mesa Verde National Park</option>
+			<option value="Mount Rainier">Mount Rainier National Park</option>
+			<option value="American Samoa">National Park of American Samoa</option>
+			<option value="New River Gorge">New River Gorge National Park</option>
+			<option value="North Cascades">North Cascades National Park</option>
+			<option value="Olympic">Olympic National Park</option>
+			<option value="Petrified Forest">Petrified Forest National Park</option>
+			<option value="Pinnacles">Pinnacles National Park</option>
+			<option value="Redwood">Redwood National Park</option>
+			<option value="Rocky Mountain">Rocky Mountain National Park</option>
+			<option value="Saguaro">Saguaro National Park</option>
+			<option value="Sequoia">Sequoia National Park</option>
+			<option value="Shenandoah">Shenandoah National Park</option>
+			<option value="Theodore Roosevelt">Theodore Roosevelt National Park</option>
+			<option value="Virgin Islands">Virgin Islands National Park</option>
+			<option value="Voyageurs">Voyageurs National Park</option>
+			<option value="White Sands">White Sands National Park</option>
+			<option value="Wind Cave">Sequoia National Park</option>
+			<option value="Wrangell-St. Elias">Wrangell-St. Elias National Park</option>
+			<option value="Yellowstone">Yellowstone National Park</option>
+			<option value="Yosemite">Yosemite National Park</option>
+			<option value="Zion">Zion National Park</option>
+		</select>
+		<label for="send">
+			<button  type="submit" id="send" name="results">Submit</button>
+		</label>
+		<article>
 
-
-</body>
+		</article>
+		<label for="parkOptions" style="display:block;">Looking for more? Check out what else your park has to offer!</label>
+		<select name="parkOptions" id="parkOptions">
+			<option value="activities">Activities</option>
+			<option value="alerts">Alerts</option>
+		</select>
+		
+	</body>
+</html>
