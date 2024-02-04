@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import parks from "./data/parks.json";
+import categories from "./data/info.json"
 import "./App.css";
 
 function App() {
 	const [parkData, setParkData] = useState(null);
 	const [selectedParkCode, setSelectedParkCode] = useState("");
 	const [isDisabled, setIsDisabled] = useState(true);
+	const [selectedCategory, setSelectedCategory] = useState(null)
 
 	const titlecase = (name) => {
 		let splitName = name.split(" ");
@@ -70,11 +72,11 @@ function App() {
 				</button>
 			</form>
 			{parkData && (
-				<div>
+				<>
 					<h2>{parkData.fullName}</h2>
 					{parkData.images[0] && <img src={parkData.images[0].url} alt={parkData.images[0].altText} width="700" height="600"/>}
 					<p>{parkData.description}</p>
-				</div>
+				</>
 			)}
 		</div>
 	);
