@@ -21,20 +21,22 @@ function App() {
 	const handleParkSelection = (e) => {
 		console.log(e.target.value);
 		setSelectedParkCode(() => e.target.value);
-		setIsDisabled(false)
+		setIsDisabled(false);
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		// Use the selected park code for the API request
-		try {
-			const response = await fetch(
-				`https://developer.nps.gov/api/v1/parks?parkCode=${selectedParkCode}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
-			);
-			const data = await response.json();
-			setParkData(data);
-			console.log(data);
-		} catch (error) {
-			console.error("Error fetching park data:", error);
+		if (selectedParkCode) {
+			try {
+				const response = await fetch(
+					`https://developer.nps.gov/api/v1/parks?parkCode=${selectedParkCode}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
+				);
+				const data = await response.json();
+				setParkData(data.data[0]);
+				console.log(data);
+			} catch (error) {
+				console.error("Error fetching park data:", error);
+			}
 		}
 	};
 
@@ -55,7 +57,7 @@ function App() {
 					id="parkInfo"
 					onChange={(e) => handleParkSelection(e)}
 				>
-					<option>Please Select A Park</option>
+					<option value="">Please Select A Park</option>
 					{parks.map((park) => (
 						<option key={park.code} value={park.code}>
 							{titlecase(park.name)}
@@ -69,7 +71,9 @@ function App() {
 			</form>
 			{parkData && (
 				<div>
-					<h2>{parkData.data[0].fullName}</h2>
+					<h2>{parkData.fullName}</h2>
+					{parkData.images[0] && <img src={parkData.images[0].url} alt={parkData.images[0].altText} width="700" height="600"/>}
+					<p>{parkData.description}</p>
 				</div>
 			)}
 		</div>
