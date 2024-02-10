@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import parks from "./data/parks.json";
-import categories from "./data/info.json"
+// import categories from "./data/info.json"
 import "./App.css";
 
 function App() {
 	const [parkData, setParkData] = useState(null);
 	const [selectedParkCode, setSelectedParkCode] = useState("");
 	const [isDisabled, setIsDisabled] = useState(true);
-	const [selectedCategory, setSelectedCategory] = useState(null)
+	const [selectedCategory, setSelectedCategory] = useState(null);
 
 	const titlecase = (name) => {
 		let splitName = name.split(" ");
@@ -50,8 +50,8 @@ function App() {
 				trails, campsites, activities, hidden gems and more!
 			</h4>
 			<p>
-				Select a park from the menu below and then press submit to start
-				exploring!
+				Exploring a park is as easy as selecting a park from the drop-down menu
+				below and hitting submit!
 			</p>
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<select
@@ -74,8 +74,30 @@ function App() {
 			{parkData && (
 				<>
 					<h2>{parkData.fullName}</h2>
-					{parkData.images[0] && <img src={parkData.images[0].url} alt={parkData.images[0].altText} width="700" height="600"/>}
+					{parkData.images[0] && (
+						<img
+							src={parkData.images[0].url}
+							alt={parkData.images[0].altText}
+							width="700"
+							height="500"
+						/>
+					)}
 					<p>{parkData.description}</p>
+
+					<h3>Want to keep exploring?! Check out additional park information below!</h3>
+					<details>
+						<summary>Operating Hours</summary>
+						<p>{parkData.operatingHours[0].description}</p>
+						
+					</details>
+					<details>
+					<summary>Directions</summary>
+						<p>{parkData.directionsInfo}</p>
+					</details>
+					<details>
+					<summary>Weather Information</summary>
+						<p>{parkData.weatherInfo}</p>
+					</details>
 				</>
 			)}
 		</div>
