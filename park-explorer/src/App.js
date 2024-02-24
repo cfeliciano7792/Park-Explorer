@@ -9,6 +9,7 @@ function App() {
 	const [selectedParkCode, setSelectedParkCode] = useState("");
 	const [isDisabled, setIsDisabled] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState(null);
+	const [randomPark, setPark] = useState("");
 
 	const titlecase = (name) => {
 		let splitName = name.split(" ");
@@ -25,13 +26,18 @@ function App() {
 		setSelectedParkCode(() => e.target.value);
 		setIsDisabled(false);
 	};
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
+		console.log(selectedParkCode)
+		nationalParkServiceCall()
+	};
+
+	const nationalParkServiceCall = async (randomParkCode=null) => {
 		// Use the selected park code for the API request
-		if (selectedParkCode) {
+		if (selectedParkCode || randomParkCode)  {
 			try {
 				const response = await fetch(
-					`https://developer.nps.gov/api/v1/parks?parkCode=${selectedParkCode}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
+					`https://developer.nps.gov/api/v1/parks?parkCode=${selectedParkCode||randomParkCode}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
 				);
 				const data = await response.json();
 				setParkData(data.data[0]);
@@ -40,7 +46,14 @@ function App() {
 				console.error("Error fetching park data:", error);
 			}
 		}
-	};
+	}
+
+	const getRandomParkCode = () => {
+        fetch('http://localhost:3000/random-dnd-class') //address will change
+            .then(response => response.json())
+            .then(data => nationalParkServiceCall(data))
+            .catch(error => console.error('Error fetching random park:', error));
+    };
 
 	return (
 		<div className="App">
@@ -61,16 +74,18 @@ function App() {
 				>
 					<option value="">Please Select A Park</option>
 					{parks.map((park) => (
-						<option key={park.code} value={park.code}>
+						<option key={`${park.name}-${park.code}`} value={park.code}>
 							{titlecase(park.name)}
 						</option>
 					))}
 				</select>
-				{console.log(isDisabled)}
 				<button type="submit" disabled={isDisabled}>
 					Submit
 				</button>
 			</form>
+
+			<button onClick={getRandomParkCode}>Surprise Me</button>
+
 			{parkData && (
 				<>
 					<h2>{parkData.fullName}</h2>
