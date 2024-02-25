@@ -68,11 +68,19 @@ function App() {
     return parkData.images.map(image => ({
         original: image.url,
         originalAlt: image.altTex,
-        // originalHeight: 500,
-        // originalWeight: 700,
-        description: image.caption,
+        originalHeight: 500,
+        originalWeight: 700,
+        //description: image.caption,
     }));
+
+	
 };
+
+const galleryOptions = {
+	showBullets: false,
+	showFullscreenButton: false,
+	showPlayButton: false,
+  };
 
 
 	return (
@@ -108,20 +116,20 @@ function App() {
 
 			{parkData && (
 				<>
+					<h2>{parkData.fullName}</h2>
 
 					<article>
-						<ImageGallery items={mapImages()}/>
+						<ImageGallery items={mapImages()}{...galleryOptions}/>
 					</article>
 
-					<h2>{parkData.fullName}</h2>
-					{parkData.images[0] && (
+					{/* {parkData.images[0] && (
 						<img
 							src={parkData.images[0].url}
 							alt={parkData.images[0].altText}
 							width="700"
 							height="500"
 						/>
-					)}
+					)} */}
 					<p>{parkData.description}</p>
 
 					<h3>
