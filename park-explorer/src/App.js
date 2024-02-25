@@ -8,14 +8,14 @@ import "./App.css";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
-
-
 function App() {
 	const [parkData, setParkData] = useState(null);
 	const [selectedParkCode, setSelectedParkCode] = useState("");
 	const [isDisabled, setIsDisabled] = useState(true);
-	const [selectedCategory, setSelectedCategory] = useState(null);
-	const [randomPark, setPark] = useState("");
+	// const [selectedCategory, setSelectedCategory] = useState(null);
+	// const [randomPark, setPark] = useState("");
+	const [parkAlert, setParkAlert] = useState(null);
+	const [parkStamp, setParkStamp] = useState(null);
 
 	const titlecase = (name) => {
 		let splitName = name.split(" ");
@@ -50,6 +50,29 @@ function App() {
 				const data = await response.json();
 				setParkData(data.data[0]);
 				console.log(data);
+
+				// Second API Call
+				const secondResponse = await fetch(
+					`https://developer.nps.gov/api/v1/alerts?parkCode=${
+						selectedParkCode || randomParkCode
+					}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
+				);
+				const alert = await secondResponse.json();
+				setParkAlert(alert.data);
+				// Process second API response data
+				console.log(alert);
+
+				// Third API Call
+				const thirdResponse = await fetch(
+					`https://developer.nps.gov/api/v1/passportstamplocations?parkCode=${
+						selectedParkCode || randomParkCode
+					}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
+				);
+				const stamp = await thirdResponse.json();
+				setParkStamp(stamp.data);
+				console.log(stamp);
+
+
 			} catch (error) {
 				console.error("Error fetching park data:", error);
 			}
@@ -63,25 +86,41 @@ function App() {
 			.catch((error) => console.error("Error fetching random park:", error));
 	};
 
-
 	const mapImages = () => {
-    return parkData.images.map(image => ({
-        original: image.url,
-        originalAlt: image.altTex,
-        originalHeight: 500,
-        originalWeight: 700,
-        //description: image.caption,
-    }));
+		return parkData.images.map((image) => ({
+			original: image.url,
+			originalAlt: image.altTex,
+			originalHeight: 500,
+			originalWeight: 700,
+			//description: image.caption,
+		}));
+	};
 
-	
-};
+	const galleryOptions = {
+		showBullets: false,
+		showFullscreenButton: false,
+		showPlayButton: false,
+	};
 
-const galleryOptions = {
-	showBullets: false,
-	showFullscreenButton: false,
-	showPlayButton: false,
-  };
+	const mapAlerts = () => {
+		return (
+			<ul>
+				{parkAlert.map((alert, index) => (
+					<li key={index}>{alert.description}</li>
+				))}
+			</ul>
+		);
+	};
 
+	const mapStamps = () => {
+		return (
+			<ul>
+				{parkStamp.map((stamp, index) => (
+					<li key={index}>{stamp.label}</li>
+				))}
+			</ul>
+		);
+	};
 
 	return (
 		<div className="App">
@@ -119,17 +158,9 @@ const galleryOptions = {
 					<h2>{parkData.fullName}</h2>
 
 					<article>
-						<ImageGallery items={mapImages()}{...galleryOptions}/>
+						<ImageGallery items={mapImages()} {...galleryOptions} />
 					</article>
 
-					{/* {parkData.images[0] && (
-						<img
-							src={parkData.images[0].url}
-							alt={parkData.images[0].altText}
-							width="700"
-							height="500"
-						/>
-					)} */}
 					<p>{parkData.description}</p>
 
 					<h3>
@@ -148,6 +179,18 @@ const galleryOptions = {
 						<summary>Weather Information</summary>
 						<p>{parkData.weatherInfo}</p>
 					</details>
+					{parkAlert && (
+						<details>
+							<summary>Park Alerts</summary>
+							{mapAlerts()}
+						</details>
+					)}
+					{parkStamp && (
+						<details>
+							<summary>Passport Stamp Locations</summary>
+							{mapStamps()}
+						</details>
+					)}
 				</>
 			)}
 		</div>
