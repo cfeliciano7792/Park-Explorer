@@ -4,6 +4,12 @@ import parks from "./data/parks.json";
 // import categories from "./data/info.json"
 import "./App.css";
 
+// image gallery
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+
+
+
 function App() {
 	const [parkData, setParkData] = useState(null);
 	const [selectedParkCode, setSelectedParkCode] = useState("");
@@ -28,16 +34,18 @@ function App() {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(selectedParkCode)
-		nationalParkServiceCall()
+		console.log(selectedParkCode);
+		nationalParkServiceCall();
 	};
 
-	const nationalParkServiceCall = async (randomParkCode=null) => {
+	const nationalParkServiceCall = async (randomParkCode = null) => {
 		// Use the selected park code for the API request
-		if (selectedParkCode || randomParkCode)  {
+		if (selectedParkCode || randomParkCode) {
 			try {
 				const response = await fetch(
-					`https://developer.nps.gov/api/v1/parks?parkCode=${selectedParkCode||randomParkCode}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
+					`https://developer.nps.gov/api/v1/parks?parkCode=${
+						selectedParkCode || randomParkCode
+					}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
 				);
 				const data = await response.json();
 				setParkData(data.data[0]);
@@ -46,14 +54,26 @@ function App() {
 				console.error("Error fetching park data:", error);
 			}
 		}
-	}
+	};
 
 	const getRandomParkCode = () => {
-        fetch('http://localhost:3000/random-dnd-class') //address will change
-            .then(response => response.json())
-            .then(data => nationalParkServiceCall(data))
-            .catch(error => console.error('Error fetching random park:', error));
-    };
+		fetch("http://localhost:3000/random-dnd-class") //address will change
+			.then((response) => response.json())
+			.then((data) => nationalParkServiceCall(data))
+			.catch((error) => console.error("Error fetching random park:", error));
+	};
+
+
+	const mapImages = () => {
+    return parkData.images.map(image => ({
+        original: image.url,
+        originalAlt: image.altTex,
+        // originalHeight: 500,
+        // originalWeight: 700,
+        description: image.caption,
+    }));
+};
+
 
 	return (
 		<div className="App">
@@ -88,6 +108,11 @@ function App() {
 
 			{parkData && (
 				<>
+
+					<article>
+						<ImageGallery items={mapImages()}/>
+					</article>
+
 					<h2>{parkData.fullName}</h2>
 					{parkData.images[0] && (
 						<img
@@ -99,18 +124,20 @@ function App() {
 					)}
 					<p>{parkData.description}</p>
 
-					<h3>Want to keep exploring?! Check out additional park information below!</h3>
+					<h3>
+						Want to keep exploring?! Check out additional park information
+						below!
+					</h3>
 					<details>
 						<summary>Operating Hours</summary>
 						<p>{parkData.operatingHours[0].description}</p>
-						
 					</details>
 					<details>
-					<summary>Directions</summary>
+						<summary>Directions</summary>
 						<p>{parkData.directionsInfo}</p>
 					</details>
 					<details>
-					<summary>Weather Information</summary>
+						<summary>Weather Information</summary>
 						<p>{parkData.weatherInfo}</p>
 					</details>
 				</>

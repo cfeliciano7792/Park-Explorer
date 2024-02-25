@@ -1,3 +1,6 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+
 .App {
   text-align: center;
 }
@@ -35,4 +38,66 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.image-gallery-slide-wrapper {
+  position: relative;
+}
+
+
+.image-gallery-slide .image-gallery-description {
+  width: 100%;
+  background: var(--lightGrey);
+  color: var(--darkBlue);
+  bottom: 0px; /* Adjust this value to control the distance from the image */
+  padding: 2px;
+  box-sizing: border-box;
+  position: absolute;
+  text-align: center;
+  white-space: normal;
+  justify-content: center;
+}
+
+
+.image-gallery .image-gallery-fullscreen-button {
+  position: absolute;
+  bottom: 20px; /* Adjust the bottom distance as needed */
+  right: 10px; /* Adjust the right distance as needed */
+  
+}
+
+.image-gallery .image-gallery-play-button {
+  position: absolute;
+  bottom: 20px; /* Adjust the bottom distance as needed */
+  left: 10px; /* Adjust the left distance as needed */
+
+}
+
+
+
+/* Custom styles for the image gallery */
+.image-gallery {
+  text-align: center; /* Center images */
+}
+
+.image-gallery-slide {
+  display: inline-block; /* Ensure each slide is displayed inline */
+  vertical-align: middle; /* Center the slide vertically */
+}
+
+.image-gallery-slide .image-gallery-description {
+  margin-top: 10px; /* Add some space between the image and the description */
+}
+
+/* Position navigation arrows closer to the images */
+.image-gallery-left-nav, .image-gallery-right-nav {
+  top: 50%; /* Align arrows vertically to the middle */
+}
+
+.image-gallery-left-nav {
+  left: 10px; /* Adjust the distance from the left */
+}
+
+.image-gallery-right-nav {
+  right: 10px; /* Adjust the distance from the right */
 }
