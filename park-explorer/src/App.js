@@ -12,8 +12,6 @@ function App() {
 	const [parkData, setParkData] = useState(null);
 	const [selectedParkCode, setSelectedParkCode] = useState("");
 	const [isDisabled, setIsDisabled] = useState(true);
-	// const [selectedCategory, setSelectedCategory] = useState(null);
-	// const [randomPark, setPark] = useState("");
 	const [parkAlert, setParkAlert] = useState(null);
 	const [parkStamp, setParkStamp] = useState(null);
 
@@ -80,7 +78,7 @@ function App() {
 	};
 
 	const getRandomParkCode = () => {
-		fetch("http://localhost:3000/random-dnd-class") //address will change
+		fetch("http://localhost:4000/") //address will change
 			.then((response) => response.json())
 			.then((data) => nationalParkServiceCall(data))
 			.catch((error) => console.error("Error fetching random park:", error));
@@ -104,7 +102,7 @@ function App() {
 
 	const mapAlerts = () => {
 		return (
-			<ul>
+			<ul className="extra-info-bullets">
 				{parkAlert.map((alert, index) => (
 					<li key={index}>{alert.description}</li>
 				))}
@@ -114,7 +112,7 @@ function App() {
 
 	const mapStamps = () => {
 		return (
-			<ul>
+			<ul className="extra-info-bullets">
 				{parkStamp.map((stamp, index) => (
 					<li key={index}>{stamp.label}</li>
 				))}
@@ -167,28 +165,44 @@ function App() {
 						Want to keep exploring?! Check out additional park information
 						below!
 					</h3>
+
 					<details>
-						<summary>Operating Hours</summary>
+						<summary className ='hand'>Operating Hours</summary>
+						<article>
 						<p>{parkData.operatingHours[0].description}</p>
+						</article>	
 					</details>
+
 					<details>
-						<summary>Directions</summary>
+						<summary className="hand">Directions</summary>
+						<article>
 						<p>{parkData.directionsInfo}</p>
+						<a href ={parkData.directionsUrl}>{parkData.directionsUrl}</a>
+						</article>
 					</details>
+
 					<details>
-						<summary>Weather Information</summary>
+						<summary className="hand">Weather Information</summary>
+						<article>
 						<p>{parkData.weatherInfo}</p>
+						</article>
 					</details>
+
 					{parkAlert && (
 						<details>
-							<summary>Park Alerts</summary>
+							<summary className="hand">Park Alerts</summary>
+							<article className="extraInfo">
 							{mapAlerts()}
+							</article>
 						</details>
 					)}
+					
 					{parkStamp && (
 						<details>
 							<summary>Passport Stamp Locations</summary>
+							<article  className="extraInfo">
 							{mapStamps()}
+							</article>
 						</details>
 					)}
 				</>
