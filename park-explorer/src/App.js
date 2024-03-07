@@ -38,11 +38,11 @@ function App() {
 
 	const nationalParkServiceCall = async (randomParkCode = null) => {
 		// Use the selected park code for the API request
-		if (selectedParkCode || randomParkCode) {
+		if (randomParkCode || selectedParkCode) {
 			try {
 				const response = await fetch(
 					`https://developer.nps.gov/api/v1/parks?parkCode=${
-						selectedParkCode || randomParkCode
+						randomParkCode || selectedParkCode
 					}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
 				);
 				const data = await response.json();
@@ -78,7 +78,7 @@ function App() {
 	};
 
 	const getRandomParkCode = () => {
-		fetch("http://localhost:4000/") //address will change
+		fetch("http://localhost:4000/") 
 			.then((response) => response.json())
 			.then((data) => nationalParkServiceCall(data))
 			.catch((error) => console.error("Error fetching random park:", error));
