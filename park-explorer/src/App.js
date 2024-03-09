@@ -115,11 +115,11 @@ function App() {
 
 	const mapAlerts = () => {
 		return (
-			<ul className="extra-info-bullets">
+			<><ul className="extra-info-bullets">
 				{parkAlert.map((alert, index) => (
-					<li key={index}>{alert.description}</li>
+					<><li key={index}>{alert.description}</li><br></br></>
 				))}
-			</ul>
+			</ul></>
 		);
 	};
 

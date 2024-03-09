@@ -22,6 +22,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   if (req.method === 'GET' && req.url === '/') {
+    console.log('Request Received')
     // Serve ID codes as JSON
     res.setHeader('Content-Type', 'application/json');
     const randomIDValue = getRandomID() //Added this to call PRIOR to sending back 
