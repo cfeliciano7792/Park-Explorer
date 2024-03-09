@@ -14,6 +14,7 @@ function App() {
 	const [isDisabled, setIsDisabled] = useState(true);
 	const [parkAlert, setParkAlert] = useState(null);
 	const [parkStamp, setParkStamp] = useState(null);
+	const [parkActivities, setParkActivities] = useState(null);
 
 	const titlecase = (name) => {
 		let splitName = name.split(" ");
@@ -25,11 +26,13 @@ function App() {
 		}
 		return result.join(" ");
 	};
+
 	const handleParkSelection = (e) => {
 		console.log(e.target.value);
 		setSelectedParkCode(() => e.target.value);
 		setIsDisabled(false);
 	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(selectedParkCode);
@@ -70,7 +73,14 @@ function App() {
 				setParkStamp(stamp.data);
 				console.log(stamp);
 
-
+				const fourthResponse = await fetch(
+					`https://developer.nps.gov/api/v1/thingstodo?parkCode=${
+						selectedParkCode || randomParkCode
+					}&q=hike%20water&limit=5&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
+				);
+				const activities = await fourthResponse.json();
+				setParkActivities(activities.data);
+				console.log(activities);
 			} catch (error) {
 				console.error("Error fetching park data:", error);
 			}
@@ -78,7 +88,7 @@ function App() {
 	};
 
 	const getRandomParkCode = () => {
-		fetch("http://localhost:4000/") 
+		fetch("http://localhost:4000/")
 			.then((response) => response.json())
 			.then((data) => nationalParkServiceCall(data))
 			.catch((error) => console.error("Error fetching random park:", error));
@@ -115,6 +125,21 @@ function App() {
 			<ul className="extra-info-bullets">
 				{parkStamp.map((stamp, index) => (
 					<li key={index}>{stamp.label}</li>
+				))}
+			</ul>
+		);
+	};
+
+	const mapActivities = () => {
+		return (
+			<ul className="extra-info-bullets">
+				{parkActivities.map((activities, index) => (
+					<><li key={index}>{activities.title}</li>
+					<ul>
+					<li key={index}>{activities.shortDescription}</li>
+					</ul>
+					<br></br>
+					</>
 				))}
 			</ul>
 		);
@@ -167,42 +192,45 @@ function App() {
 					</h3>
 
 					<details>
-						<summary className ='hand'>Operating Hours</summary>
+						<summary className="hand">Operating Hours</summary>
 						<article>
-						<p>{parkData.operatingHours[0].description}</p>
-						</article>	
+							<p>{parkData.operatingHours[0].description}</p>
+						</article>
 					</details>
 
 					<details>
 						<summary className="hand">Directions</summary>
 						<article>
-						<p>{parkData.directionsInfo}</p>
-						<a href ={parkData.directionsUrl}>{parkData.directionsUrl}</a>
+							<p>{parkData.directionsInfo}</p>
+							<a href={parkData.directionsUrl}>{parkData.directionsUrl}</a>
 						</article>
 					</details>
 
 					<details>
 						<summary className="hand">Weather Information</summary>
 						<article>
-						<p>{parkData.weatherInfo}</p>
+							<p>{parkData.weatherInfo}</p>
 						</article>
 					</details>
 
 					{parkAlert && (
 						<details>
 							<summary className="hand">Park Alerts</summary>
-							<article className="extraInfo">
-							{mapAlerts()}
-							</article>
+							<article className="extraInfo">{mapAlerts()}</article>
 						</details>
 					)}
-					
+
 					{parkStamp && (
 						<details>
 							<summary>Passport Stamp Locations</summary>
-							<article  className="extraInfo">
-							{mapStamps()}
-							</article>
+							<article className="extraInfo">{mapStamps()}</article>
+						</details>
+					)}
+
+					{parkActivities && (
+						<details>
+							<summary>Popular Park Activities</summary>
+							<article className="extraInfo">{mapActivities()}</article>
 						</details>
 					)}
 				</>
