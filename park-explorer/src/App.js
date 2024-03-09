@@ -8,6 +8,9 @@ import "./App.css";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
+// imported components
+import Welcome from './components/WelcomeMessage.js';
+
 function App() {
 	const [parkData, setParkData] = useState(null);
 	const [selectedParkCode, setSelectedParkCode] = useState("");
@@ -147,15 +150,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<h1>Welcome to National Park Explorer!!</h1>
-			<h4>
-				National Park Explorer unlocks the secrets of all 63 U.S. parks! Find
-				trails, campsites, activities, hidden gems and more!
-			</h4>
-			<p>
-				Exploring a park is as easy as selecting a park from the drop-down menu
-				below and hitting submit!
-			</p>
+			<Welcome />
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<select
 					name="parkNames"
