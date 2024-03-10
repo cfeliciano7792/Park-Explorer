@@ -5,11 +5,14 @@ import parks from "./data/parks.json";
 import "./App.css";
 
 // image gallery
-import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
 // imported components
 import Welcome from './components/WelcomeMessage.js';
+import ParkImageGallery from './components/ImageGallery.js';
+import DisplayOperatingHours from "./components/OperatingHours.js";
+import DisplayDirections from "./components/DisplayDirections.js";
+import DisplayWeather from "./components/DisplayWeather.js";
 
 function App() {
 	const [parkData, setParkData] = useState(null);
@@ -97,21 +100,6 @@ function App() {
 			.catch((error) => console.error("Error fetching random park:", error));
 	};
 
-	const mapImages = () => {
-		return parkData.images.map((image) => ({
-			original: image.url,
-			originalAlt: image.altTex,
-			originalHeight: 500,
-			originalWeight: 700,
-			//description: image.caption,
-		}));
-	};
-
-	const galleryOptions = {
-		showBullets: false,
-		showFullscreenButton: false,
-		showPlayButton: false,
-	};
 
 	const mapAlerts = () => {
 		return (
@@ -175,9 +163,7 @@ function App() {
 				<>
 					<h2>{parkData.fullName}</h2>
 
-					<article>
-						<ImageGallery items={mapImages()} {...galleryOptions} />
-					</article>
+					{parkData && <ParkImageGallery parkData={parkData} />}
 
 					<p>{parkData.description}</p>
 
@@ -186,27 +172,11 @@ function App() {
 						below!
 					</h3>
 
-					<details>
-						<summary className="hand">Operating Hours</summary>
-						<article>
-							<p>{parkData.operatingHours[0].description}</p>
-						</article>
-					</details>
+					{parkData && <DisplayOperatingHours parkData={parkData} />}
 
-					<details>
-						<summary className="hand">Directions</summary>
-						<article>
-							<p>{parkData.directionsInfo}</p>
-							<a href={parkData.directionsUrl}>{parkData.directionsUrl}</a>
-						</article>
-					</details>
+					{parkData && <DisplayDirections parkData={parkData} />}
 
-					<details>
-						<summary className="hand">Weather Information</summary>
-						<article>
-							<p>{parkData.weatherInfo}</p>
-						</article>
-					</details>
+					{parkData && <DisplayWeather parkData={parkData} />}
 
 					{parkAlert && (
 						<details>
