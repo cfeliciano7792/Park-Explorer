@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 
 import parks from "./data/parks.json";
 // import categories from "./data/info.json"
@@ -14,6 +14,9 @@ import OperatingHours from "./components/OperatingHours.js";
 import Directions from "./components/Directions.js";
 import Weather from "./components/Weather.js";
 import ParkAlerts from "./components/ParkAlerts.js";
+import ParkStamps from "./components/ParkStamps.js";
+import ParkActivities from "./components/ParkActivities.js";
+
 
 function App() {
 	const [parkData, setParkData] = useState(null);
@@ -61,24 +64,9 @@ function App() {
 
 				secondCall(randomParkCode || selectedParkCode);
 
-				// Third API Call
-				const thirdResponse = await fetch(
-					`https://developer.nps.gov/api/v1/passportstamplocations?parkCode=${
-						selectedParkCode || randomParkCode
-					}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
-				);
-				const stamp = await thirdResponse.json();
-				setParkStamp(stamp.data);
-				console.log(stamp);
+				thirdCall(randomParkCode || selectedParkCode);
 
-				const fourthResponse = await fetch(
-					`https://developer.nps.gov/api/v1/thingstodo?parkCode=${
-						selectedParkCode || randomParkCode
-					}&q=hike%20water&limit=5&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
-				);
-				const activities = await fourthResponse.json();
-				setParkActivities(activities.data);
-				console.log(activities);
+				fourthCall(randomParkCode || selectedParkCode);
 			} catch (error) {
 				console.error("Error fetching park data:", error);
 			}
@@ -101,33 +89,32 @@ function App() {
 		);
 		const alert = await secondResponse.json();
 		setParkAlert(alert.data);
-		// Process second API response data
 		console.log(alert);
 	};
 
-	const mapStamps = () => {
-		return (
-			<ul className="extra-info-bullets">
-				{parkStamp.map((stamp, index) => (
-					<li key={`${stamp.label}-${index}`}>{stamp.label}</li>
-				))}
-			</ul>
+	const thirdCall = async (parkCode) => {
+		// Third API Call
+		const thirdResponse = await fetch(
+			`https://developer.nps.gov/api/v1/passportstamplocations?parkCode=${
+				parkCode
+			}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
 		);
+		const stamp = await thirdResponse.json();
+		setParkStamp(stamp.data);
+		console.log(stamp);
 	};
 
-	const mapActivities = () => {
-		return (
-			<ul className="extra-info-bullets activities">
-				{parkActivities.map((activity, index) => (
-					<li className="activity" key={`${activity.title}-${index}`}>
-						<h3>{activity.title}</h3>
-						<p>{activity.shortDescription}</p>
-					</li>
-				))}
-			</ul>
+	const fourthCall = async (parkCode) => {
+		const fourthResponse = await fetch(
+			`https://developer.nps.gov/api/v1/thingstodo?parkCode=${
+				parkCode
+			}&q=hike%20water&limit=5&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
 		);
+		const activities = await fourthResponse.json();
+		setParkActivities(activities.data);
+		console.log(activities);
 	};
-
+	
 	return (
 		<div className="App">
 			<Welcome />
@@ -172,19 +159,9 @@ function App() {
 
 					<ParkAlerts parkAlert={parkAlert} />
 
-					{parkStamp && (
-						<details>
-							<summary>Passport Stamp Locations</summary>
-							<article className="extraInfo">{mapStamps()}</article>
-						</details>
-					)}
+					<ParkStamps parkStamp={parkStamp} />
 
-					{parkActivities && (
-						<details>
-							<summary>Popular Park Activities</summary>
-							<article className="extraInfo">{mapActivities()}</article>
-						</details>
-					)}
+					<ParkActivities parkActivities={parkActivities} />
 				</>
 			)}
 		</div>
