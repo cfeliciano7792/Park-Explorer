@@ -1,6 +1,6 @@
 import React from "react";
 
-const DisplayDirections = ({ parkData }) => {
+const Directions = ({ parkData }) => {
 	return (
 		<details>
 			<summary className="hand">Directions</summary>
@@ -12,4 +12,4 @@ const DisplayDirections = ({ parkData }) => {
 	);
 };
 
-export default DisplayDirections;
+export default Directions;

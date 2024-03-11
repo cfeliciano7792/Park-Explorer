@@ -8,11 +8,12 @@ import "./App.css";
 import "react-image-gallery/styles/css/image-gallery.css";
 
 // imported components
-import Welcome from './components/WelcomeMessage.js';
-import ParkImageGallery from './components/ImageGallery.js';
-import DisplayOperatingHours from "./components/OperatingHours.js";
-import DisplayDirections from "./components/DisplayDirections.js";
-import DisplayWeather from "./components/DisplayWeather.js";
+import Welcome from "./components/WelcomeMessage.js";
+import ParkImageGallery from "./components/ImageGallery.js";
+import OperatingHours from "./components/OperatingHours.js";
+import Directions from "./components/Directions.js";
+import Weather from "./components/Weather.js";
+import ParkAlerts from "./components/ParkAlerts.js";
 
 function App() {
 	const [parkData, setParkData] = useState(null);
@@ -58,16 +59,7 @@ function App() {
 				setParkData(data.data[0]);
 				console.log(data);
 
-				// Second API Call
-				const secondResponse = await fetch(
-					`https://developer.nps.gov/api/v1/alerts?parkCode=${
-						selectedParkCode || randomParkCode
-					}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
-				);
-				const alert = await secondResponse.json();
-				setParkAlert(alert.data);
-				// Process second API response data
-				console.log(alert);
+				secondCall(randomParkCode || selectedParkCode);
 
 				// Third API Call
 				const thirdResponse = await fetch(
@@ -100,22 +92,24 @@ function App() {
 			.catch((error) => console.error("Error fetching random park:", error));
 	};
 
-
-	const mapAlerts = () => {
-		return (
-			<><ul className="extra-info-bullets">
-				{parkAlert.map((alert, index) => (
-					<><li key={index}>{alert.description}</li><br></br></>
-				))}
-			</ul></>
+	const secondCall = async (parkCode) => {
+		// Second API Call
+		const secondResponse = await fetch(
+			`https://developer.nps.gov/api/v1/alerts?parkCode=${
+				parkCode
+			}&api_key=u5dhPp0IQxDxb9RQu2SvUXcfN3Bd9zyioBCqCajr`
 		);
+		const alert = await secondResponse.json();
+		setParkAlert(alert.data);
+		// Process second API response data
+		console.log(alert);
 	};
 
 	const mapStamps = () => {
 		return (
 			<ul className="extra-info-bullets">
 				{parkStamp.map((stamp, index) => (
-					<li key={index}>{stamp.label}</li>
+					<li key={`${stamp.label}-${index}`}>{stamp.label}</li>
 				))}
 			</ul>
 		);
@@ -123,14 +117,12 @@ function App() {
 
 	const mapActivities = () => {
 		return (
-			<ul className="extra-info-bullets">
-				{parkActivities.map((activities, index) => (
-					<><li key={index}>{activities.title}</li>
-					<ul>
-					<li key={index}>{activities.shortDescription}</li>
-					</ul>
-					<br></br>
-					</>
+			<ul className="extra-info-bullets activities">
+				{parkActivities.map((activity, index) => (
+					<li className="activity" key={`${activity.title}-${index}`}>
+						<h3>{activity.title}</h3>
+						<p>{activity.shortDescription}</p>
+					</li>
 				))}
 			</ul>
 		);
@@ -163,7 +155,7 @@ function App() {
 				<>
 					<h2>{parkData.fullName}</h2>
 
-					{parkData && <ParkImageGallery parkData={parkData} />}
+					<ParkImageGallery parkData={parkData} />
 
 					<p>{parkData.description}</p>
 
@@ -172,18 +164,13 @@ function App() {
 						below!
 					</h3>
 
-					{parkData && <DisplayOperatingHours parkData={parkData} />}
+					<OperatingHours parkData={parkData} />
 
-					{parkData && <DisplayDirections parkData={parkData} />}
+					<Directions parkData={parkData} />
 
-					{parkData && <DisplayWeather parkData={parkData} />}
+					<Weather parkData={parkData} />
 
-					{parkAlert && (
-						<details>
-							<summary className="hand">Park Alerts</summary>
-							<article className="extraInfo">{mapAlerts()}</article>
-						</details>
-					)}
+					<ParkAlerts parkAlert={parkAlert} />
 
 					{parkStamp && (
 						<details>

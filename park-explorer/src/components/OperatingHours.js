@@ -1,6 +1,6 @@
 import React from "react";
 
-const DisplayOperatingHours = ({ parkData }) => {
+const OperatingHours = ({ parkData }) => {
 	return (
 		<details>
 			<summary className="hand">Operating Hours</summary>
@@ -11,4 +11,4 @@ const DisplayOperatingHours = ({ parkData }) => {
 	);
 };
 
-export default DisplayOperatingHours
+export default OperatingHours

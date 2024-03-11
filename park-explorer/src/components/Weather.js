@@ -1,6 +1,6 @@
 import React from "react";
 
-const DisplayWeather = ({ parkData }) => {
+const Weather = ({ parkData }) => {
 	return (
 		<details>
 			<summary className="hand">Weather Information</summary>
@@ -11,4 +11,4 @@ const DisplayWeather = ({ parkData }) => {
 	);
 };
 
-export default DisplayWeather;
+export default Weather;

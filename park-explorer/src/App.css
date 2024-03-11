@@ -137,3 +137,15 @@ ul.extra-info-bullets {
   padding: 10px 10px;
   
 }
+
+ul.activities {
+  list-style: none;
+}
+
+.activity h3{
+  margin-bottom: .5em;
+}
+
+.activity p{
+  margin-bottom: 1.5em;
+}
