@@ -15,6 +15,7 @@ import ParkAlerts from "./components/ParkAlerts.js";
 import ParkStamps from "./components/ParkStamps.js";
 import ParkActivities from "./components/ParkActivities.js";
 import Form from "./components/Form.js";
+import Button from "./components/Button.js";
 
 
 function App() {
@@ -50,17 +51,18 @@ function App() {
 				setParkData(data.data[0]);
 				console.log(data);
 
-				secondCall(randomParkCode || selectedParkCode);
+				secondApiCall(randomParkCode || selectedParkCode);
 
-				thirdCall(randomParkCode || selectedParkCode);
+				thirdApiCall(randomParkCode || selectedParkCode);
 
-				fourthCall(randomParkCode || selectedParkCode);
+				fourthApiCall(randomParkCode || selectedParkCode);
 			} catch (error) {
 				console.error("Error fetching park data:", error);
 			}
 		}
 	};
 
+	// Microservice Function
 	const getRandomParkCode = () => {
 		fetch("http://localhost:4000/")
 			.then((response) => response.json())
@@ -68,8 +70,8 @@ function App() {
 			.catch((error) => console.error("Error fetching random park:", error));
 	};
 
-	const secondCall = async (parkCode) => {
-		// Second API Call
+	const secondApiCall = async (parkCode) => {
+		// Second API Call for Alerts
 		const secondResponse = await fetch(
 			`https://developer.nps.gov/api/v1/alerts?parkCode=${
 				parkCode
@@ -80,8 +82,8 @@ function App() {
 		console.log(alert);
 	};
 
-	const thirdCall = async (parkCode) => {
-		// Third API Call
+	const thirdApiCall = async (parkCode) => {
+		// Third API Call for Stamp Locations
 		const thirdResponse = await fetch(
 			`https://developer.nps.gov/api/v1/passportstamplocations?parkCode=${
 				parkCode
@@ -92,7 +94,8 @@ function App() {
 		console.log(stamp);
 	};
 
-	const fourthCall = async (parkCode) => {
+	const fourthApiCall = async (parkCode) => {
+		// Fourth API Call for Park Activities
 		const fourthResponse = await fetch(
 			`https://developer.nps.gov/api/v1/thingstodo?parkCode=${
 				parkCode
@@ -109,7 +112,7 @@ function App() {
 
 			<Form handleSubmit={handleSubmit} handleParkSelection={handleParkSelection} isDisabled={isDisabled}/>
 
-			<button onClick={getRandomParkCode}>Surprise Me</button>
+			<Button getRandomParkCode={getRandomParkCode} />
 
 			{parkData && (
 				<>
