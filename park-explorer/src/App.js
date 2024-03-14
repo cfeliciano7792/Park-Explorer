@@ -1,7 +1,5 @@
 import React, { useState} from "react";
 
-import parks from "./data/parks.json";
-// import categories from "./data/info.json"
 import "./App.css";
 
 // image gallery
@@ -16,6 +14,7 @@ import Weather from "./components/Weather.js";
 import ParkAlerts from "./components/ParkAlerts.js";
 import ParkStamps from "./components/ParkStamps.js";
 import ParkActivities from "./components/ParkActivities.js";
+import Form from "./components/Form.js";
 
 
 function App() {
@@ -25,17 +24,6 @@ function App() {
 	const [parkAlert, setParkAlert] = useState(null);
 	const [parkStamp, setParkStamp] = useState(null);
 	const [parkActivities, setParkActivities] = useState(null);
-
-	const titlecase = (name) => {
-		let splitName = name.split(" ");
-		let result = [];
-		for (let i = 0; i < splitName.length; i++) {
-			let res = splitName[i][0].toUpperCase();
-			res += splitName[i].slice(1).toLowerCase();
-			result.push(res);
-		}
-		return result.join(" ");
-	};
 
 	const handleParkSelection = (e) => {
 		console.log(e.target.value);
@@ -118,23 +106,8 @@ function App() {
 	return (
 		<div className="App">
 			<Welcome />
-			<form onSubmit={(e) => handleSubmit(e)}>
-				<select
-					name="parkNames"
-					id="parkInfo"
-					onChange={(e) => handleParkSelection(e)}
-				>
-					<option value="">Please Select A Park</option>
-					{parks.map((park) => (
-						<option key={`${park.name}-${park.code}`} value={park.code}>
-							{titlecase(park.name)}
-						</option>
-					))}
-				</select>
-				<button type="submit" disabled={isDisabled}>
-					Submit
-				</button>
-			</form>
+
+			<Form handleSubmit={handleSubmit} handleParkSelection={handleParkSelection} isDisabled={isDisabled}/>
 
 			<button onClick={getRandomParkCode}>Surprise Me</button>
 
