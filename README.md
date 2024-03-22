@@ -22,16 +22,21 @@ Welcome to National Park Explorer! This React app allows users to explore variou
 git clone https://github.com/your-username/national-park-explorer.git
 ```
 
-2. Install dependencies:
+2. Navigate to the project directory:
+```bash
+cd park-explorer
+```
+
+3. Install dependencies:
 
 ```bash
 npm install
 ```
 
-3. Start the development server:
+4. Start the development server:
 ```bash
 npm start
 ```
 
-4. Open your browser and navigate to http://localhost:3000 to view the app.
+5. Open your browser and navigate to http://localhost:3000 to view the app.
 
