@@ -40,3 +40,9 @@ npm start
 
 5. Open your browser and navigate to http://localhost:3000 to view the app.
 
+## How to Use
+
+- Upon launching the app, you will be presented with a menu of national parks.
+- Select a park from the dropdown menu and click "Submit" to view detailed information about the selected park.
+- Explore different parks by selecting a new park from the dropdown menu.
+
