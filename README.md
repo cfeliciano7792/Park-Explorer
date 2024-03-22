@@ -12,7 +12,6 @@ Welcome to National Park Explorer! This React app allows users to explore variou
 
 - **React**: Built using React, a JavaScript library for building user interfaces.
 - **National Park Service API**: Leveraged the National Park Service API to fetch data about the national parks.
-- **Bootstrap**: Styled with Bootstrap for a clean and responsive design.
 
 ## Installation
 
