@@ -1,0 +1,11 @@
+{
+  "name": "park-explorer",
+  "version": "1.0.0",
+  "description": "Welcome to National Park Explorer! This React app allows users to explore various information about the 63 national parks in the United States. Utilizing the National Park Service API, users can access a plethora of data including park hours, activities, climate details, and alerts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

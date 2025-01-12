@@ -64,10 +64,20 @@ function App() {
 
 	// Microservice Function
 	const getRandomParkCode = () => {
-		fetch("http://localhost:4000/")
-			.then((response) => response.json())
-			.then((data) => nationalParkServiceCall(data))
-			.catch((error) => console.error("Error fetching random park:", error));
+		const idCodes = [
+			"acad", "npsa", "arch", "badl", "bibe", "bisc", "blca", "brca", "cany", "care",
+			"cave", "chis", "cong", "crla", "cuva", "deva", "dena", "drto", "ever", "gaar",
+			"jeff", "glac", "glba", "grca", "grta", "grba", "grsa", "grsm", "gumo", "hale",
+			"havo", "hosp", "indu", "isro", "jotr", "katm", "kefj", "seki", "kova", "lacl",
+			"lavo", "maca", "meve", "mora", "neri", "noca", "olym", "pefo", "pinn", "redw",
+			"romo", "sagu", "seki", "shen", "thro", "viis", "voya", "whsa", "wica", "wrst",
+			"yell", "yose", "zion"
+		  ];
+		  
+		const randomID = Math.floor(Math.random() * idCodes.length);
+		console.log(randomID)  
+
+		nationalParkServiceCall(idCodes[randomID])
 	};
 
 	const secondApiCall = async (parkCode) => {
